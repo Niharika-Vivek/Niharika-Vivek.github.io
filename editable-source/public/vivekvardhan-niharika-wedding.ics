@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Vivekvardhan and Niharika//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:vivekvardhan-niharika-20261115@wedding.chatgpt.site
+DTSTAMP:20261024T120000Z
+DTSTART:20261115T133000Z
+SUMMARY:Vivekvardhan & Niharika — Wedding
+LOCATION:One Trenton Events & Retreats\, 11391 State Highway 121\, Trenton
+ \, TX 75490
+DESCRIPTION:Wedding ceremony at 7:30 AM. Wedding lunch at 12:00 PM.\nAll t
+ imes are Central Time.
+END:VEVENT
+END:VCALENDAR

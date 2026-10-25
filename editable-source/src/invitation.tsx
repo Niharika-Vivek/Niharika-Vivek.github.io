@@ -68,11 +68,11 @@ export default function VersionThree({rsvpPage=false}:{rsvpPage?:boolean}){
  useEffect(()=>{const q=matchMedia('(prefers-reduced-motion: reduce)');const update=()=>setMotion(!q.matches);update();q.addEventListener('change',update);return()=>q.removeEventListener('change',update)},[]);
  useEffect(()=>{if(!entered)return;const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.05});interior.current?.querySelectorAll('.reveal,.v1-live').forEach(el=>observer.observe(el));return()=>observer.disconnect()},[entered,view]);
  useEffect(()=>{
-  const sync=()=>{const el=audio.current;if(!el)return;const active=entered&&musicAllowed.current&&document.visibilityState==='visible'&&document.hasFocus();if(!active){el.pause();return}el.volume=.7;void el.play().then(()=>{if(document.visibilityState!=='visible'||!document.hasFocus())el.pause()}).catch(()=>{})};
+  const sync=()=>{const el=audio.current;if(!el)return;const active=opened&&musicAllowed.current&&document.visibilityState==='visible'&&document.hasFocus();if(!active){el.pause();return}el.volume=.7;void el.play().then(()=>{if(document.visibilityState!=='visible'||!document.hasFocus())el.pause()}).catch(()=>{})};
   const stop=()=>audio.current?.pause();
   document.addEventListener('visibilitychange',sync);window.addEventListener('focus',sync);window.addEventListener('blur',stop);window.addEventListener('pagehide',stop);window.addEventListener('pageshow',sync);sync();
   return()=>{document.removeEventListener('visibilitychange',sync);window.removeEventListener('focus',sync);window.removeEventListener('blur',stop);window.removeEventListener('pagehide',stop);window.removeEventListener('pageshow',sync);stop()};
- },[entered]);
+ },[opened]);
  useEffect(()=>{
   const menu=()=>interior.current?.querySelector<HTMLDetailsElement>('.v3-calendar');
   const close=()=>{const el=menu();if(el)el.open=false};
@@ -81,10 +81,10 @@ export default function VersionThree({rsvpPage=false}:{rsvpPage?:boolean}){
   document.addEventListener('pointerdown',outside);document.addEventListener('keydown',key);window.addEventListener('scroll',close,{passive:true});
   return()=>{document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',key);window.removeEventListener('scroll',close)};
  },[entered,view]);
- function unlockMusic(){musicAllowed.current=true;const el=audio.current;if(!el)return;el.volume=0;void el.play().then(()=>{if(document.visibilityState!=='visible'||!document.hasFocus())el.pause()}).catch(()=>{})}
+ function unlockMusic(){musicAllowed.current=true;const el=audio.current;if(!el)return;el.volume=.7;void el.play().then(()=>{if(document.visibilityState!=='visible'||!document.hasFocus())el.pause()}).catch(()=>{})}
  function enter(withMusic:boolean){if(entering)return;setEntering(true);setOpened(true);window.scrollTo({top:0,behavior:'instant'});if(withMusic)unlockMusic();if(!motion){setEntered(true);return}entranceTimer.current=setTimeout(()=>{setEntered(true)},2400)}
  return <div className="wedding-experience version-three v3-short-invite v3-red-invite" data-entered={entered}>
- <audio ref={audio} src="./wedding-celebration.mp3" loop preload="none"/>
+ <audio ref={audio} src="./wedding-celebration.mp3" loop preload="auto"/>
  {!entered&&<div className={'simple-invite si-opening '+(entering?'si-opening-out':'')} role="dialog" aria-modal="true" aria-labelledby="welcome-title"><div className="si-curtain si-left"><Rangoli/></div><div className="si-curtain si-right"><Rangoli/></div><Toran/><div className="si-opening-copy"><Ganesh/><p className="si-eyebrow">WITH LOVE, YOU’RE INVITED</p><h1 id="welcome-title">Vivekvardhan<em>weds</em>Niharika</h1><p className="si-opening-date">15 NOVEMBER 2026 · TRENTON, TEXAS</p><button className="si-primary" disabled={entering} onClick={()=>enter(true)}>{entering?'Opening your invitation…':'Open invitation'}</button><p className="si-opening-note">With the blessings of our families.</p></div></div>}
  <div className="v1-temple-interior v3-classic-interior" data-motion={motion?'on':'off'} ref={interior} inert={!entered}>
  {entered&&view==='invitation'&&<div className="v3-gold-sparkles" aria-hidden="true">{Array.from({length:14},(_,i)=><svg key={i} viewBox="0 0 12 12" style={{'--spark-x':`${(i*37+7)%100}%`,'--spark-size':`${3+(i%3)*1.5}px`,'--spark-time':`${9+(i%5)}s`,'--spark-delay':`${i*.75}s`,'--spark-drift':`${i%2===0?16:-16}px`} as CSSProperties}><path d="M6 0 7.5 4.5 12 6 7.5 7.5 6 12 4.5 7.5 0 6 4.5 4.5Z"/></svg>)}</div>}

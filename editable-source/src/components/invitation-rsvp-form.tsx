@@ -6,6 +6,7 @@ export default function InvitationRsvpForm(){
  async function submit(e:React.FormEvent<HTMLFormElement>){
   e.preventDefault();if(sending)return;setError('');
   const form=e.currentTarget,data=new FormData(form),guests=attending?Number(data.get('guests')):0,children=attending?Number(data.get('children')):0;
+  if(attending&&(!Number.isInteger(guests)||guests<1||guests>99||!Number.isInteger(children)||children<0||children>99)){setError('Please enter guest counts using one or two digits.');return}
   if(attending&&children>=guests){setError('The guest count must include at least one adult.');return}
   setSending(true);
   try{
@@ -23,8 +24,8 @@ export default function InvitationRsvpForm(){
  <label>Full name<input name="name" required minLength={2} maxLength={120} autoComplete="name" placeholder="Your full name"/></label>
  <label>Email address <span>(optional)</span><input name="email" type="email" maxLength={150} autoComplete="email" placeholder="you@example.com"/></label>
  {attending&&<>
- <label>Number of guests, including you<input name="guests" type="number" min={1} max={12} defaultValue={1} required/></label>
- <label>Children included in this total <span>(if any)</span><input name="children" type="number" min={0} max={11} defaultValue={0}/></label>
+ <label>Number of guests, including you<input name="guests" type="text" inputMode="numeric" pattern="[0-9]{1,2}" maxLength={2} defaultValue="1" onChange={e=>{e.currentTarget.value=e.currentTarget.value.replace(/\D/g,'').slice(0,2)}} required/></label>
+ <label>Children included in this total <span>(if any)</span><input name="children" type="text" inputMode="numeric" pattern="[0-9]{1,2}" maxLength={2} defaultValue="0" onChange={e=>{e.currentTarget.value=e.currentTarget.value.replace(/\D/g,'').slice(0,2)}} required/></label>
  </>}
  <label>A message or food allergies <span>(optional)</span><textarea name="notes" maxLength={500} rows={2} placeholder="Anything you would like us to know"/></label>
  <div className="honey" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off"/></label></div>

@@ -1,0 +1,35 @@
+INVITATION UPDATE — KEEP YOUR EXISTING GOOGLE SHEETS CONNECTION
+
+This is an UPDATE package, not the complete website. Upload it into your EXISTING Niharika-Vivek.github.io repository. Do not delete the repository.
+
+1. Extract this ZIP on your computer.
+2. Open your existing repository on GitHub. Add file > Upload files.
+3. Drag index.html, the assets folder and the editable-source folder from INSIDE this extracted package into the upload area. GitHub will replace index.html and add the new bundled JS/CSS files. Commit changes.
+4. Wait for GitHub Pages deployment to finish. Refresh the live invitation. If the old version remains, hard-refresh (Ctrl+Shift+R) or check in a private window.
+
+PRESERVE THESE:
+- config.js: it is intentionally NOT included. Keep the existing file containing your deployed /exec URL.
+- Your Google Sheet, its existing responses, sharing settings and spreadsheet ID.
+- Existing music, artwork, calendar download and other uploaded files. No re-upload needed.
+- Old assets may remain; index.html now loads the NEW filenames.
+
+SMALL GOOGLE APPS SCRIPT LIMIT UPDATE
+The original supplied receiver allows only 12 adults and 12 children. The new interface accepts at most TWO digits and a maximum TOTAL of 99 guests. To match this:
+1. Google Sheet > Extensions > Apps Script.
+2. In the validation line change adults>12 to adults>99.
+3. Change children>12 to children>99||adults+children>99.
+4. Do NOT change SPREADSHEET_ID or any other settings. Save.
+5. Deploy > Manage deployments > select your existing Web app > Edit (pencil) > Version: New version > Deploy.
+6. Keep the same existing deployment; this retains the /exec URL, so config.js remains unchanged. If Google gives you a different URL because you created a new deployment instead, update config.js with that new /exec URL.
+7. If your existing script already uses 99 limits, do not apply the replacements again.
+
+CHECKS AFTER UPLOAD
+- Guests and children accept only one or two digits; pasting 9999999 stops at 99. Children must be fewer than total guests.
+- Music is audible after opening; switching tabs/apps or locking the phone pauses playback. Returning may resume, subject to the phone browser's autoplay policy.
+- No floating pause-motion/music buttons.
+- Add to calendar closes on outside click, page scrolling or Escape.
+- Smaller R.S.V.P. heading, narrower rounded Send RSVP button.
+- On successful submission the introductory sentence hides and the confirmation has compact spacing.
+- Submit a labelled TEST RSVP and confirm exactly one corresponding row appears in your EXISTING sheet. Test a declined reply too. Delete only your test rows afterward.
+
+Your GitHub repository and Google Sheet were not modified by creating this download. The package contains no credentials, no replacement config.js and no guest data.
